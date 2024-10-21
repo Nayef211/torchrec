@@ -10,11 +10,10 @@ on:
         required: false
   workflow_dispatch:
 
-env:
-  PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
-
 jobs:
   build_release:
+    env:
+      PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
     strategy:
       matrix:
         include:
