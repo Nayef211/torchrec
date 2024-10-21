@@ -10,6 +10,9 @@ on:
         required: false
   workflow_dispatch:
 
+env:
+  PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+
 jobs:
   build_release:
     strategy:
@@ -32,8 +35,6 @@ jobs:
             python-tag: "py312"
             cuda-tag: "cu124"
     uses: pytorch/test-infra/.github/workflows/linux_job.yml@main
-    env:
-        PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
     with:
       runner: ${{ matrix.os }}
       timeout: 30
