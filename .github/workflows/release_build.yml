@@ -35,6 +35,8 @@ jobs:
     with:
       runner: ${{ matrix.os }}
       timeout: 30
+      env:
+        PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
       script: |
         ldd --version
         conda create -y --name build_binary python=${{ matrix.python-version }}
