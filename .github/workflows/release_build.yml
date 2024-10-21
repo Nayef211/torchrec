@@ -19,11 +19,12 @@ jobs:
         python-version: [3.9, "3.10", "3.11", "3.12"]
         cuda-tag: ["cu124"]
     steps:
+    - name: Set up Environment
+      uses: pytorch/test-infra/.github/workflows/linux_job.yml@main
     - name: Push to PyPI
       env:
         PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
         OFFICIAL_RELEASE: 1
-      uses: pytorch/test-infra/.github/workflows/linux_job.yml@main
       run: |
         ldd --version
         conda create -y --name build_binary python=${{ matrix.python-version }}
