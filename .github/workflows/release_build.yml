@@ -12,30 +12,19 @@ on:
 
 jobs:
   build_release:
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        include:
-          - os: linux.g5.12xlarge.nvidia.gpu
-            python-version: 3.9
-            python-tag: "py39"
-            cuda-tag: "cu124"
-          - os: linux.g5.12xlarge.nvidia.gpu
-            python-version: '3.10'
-            python-tag: "py310"
-            cuda-tag: "cu124"
-          - os: linux.g5.12xlarge.nvidia.gpu
-            python-version: '3.11'
-            python-tag: "py311"
-            cuda-tag: "cu124"
-          - os: linux.g5.12xlarge.nvidia.gpu
-            python-version: '3.12'
-            python-tag: "py312"
-            cuda-tag: "cu124"
-    uses: pytorch/test-infra/.github/workflows/linux_job.yml@main
-    with:
-      runner: ${{ matrix.os }}
-      timeout: 30
-      script: |
+        os: [linux.4xlarge.nvidia.gpu]
+        python-version: [3.9, "3.10", "3.11", "3.12"]
+        cuda-tag: ["cu124"]
+    steps:
+    - name: Push to PyPI
+      env:
+        PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+        OFFICIAL_RELEASE: 1
+      uses: pytorch/test-infra/.github/workflows/linux_job.yml@main
+      run: |
         ldd --version
         conda create -y --name build_binary python=${{ matrix.python-version }}
         conda info
@@ -63,9 +52,7 @@ jobs:
         conda run -n build_binary \
           python -m twine upload \
             --username __token__ \
-            --password ${{ secrets.PYPI_TOKEN }} \
+            --password "$PYPI_TOKEN" \
             --skip-existing \
             dist/torchrec-*.whl
-    env:
-      PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
-
+  
