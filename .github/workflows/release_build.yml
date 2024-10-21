@@ -18,19 +18,19 @@ jobs:
           - os: linux.g5.12xlarge.nvidia.gpu
             python-version: 3.9
             python-tag: "py39"
-            cuda-tag: "cu121"
+            cuda-tag: "cu124"
           - os: linux.g5.12xlarge.nvidia.gpu
             python-version: '3.10'
             python-tag: "py310"
-            cuda-tag: "cu121"
+            cuda-tag: "cu124"
           - os: linux.g5.12xlarge.nvidia.gpu
             python-version: '3.11'
             python-tag: "py311"
-            cuda-tag: "cu121"
+            cuda-tag: "cu124"
           - os: linux.g5.12xlarge.nvidia.gpu
             python-version: '3.12'
             python-tag: "py312"
-            cuda-tag: "cu121"
+            cuda-tag: "cu124"
     uses: pytorch/test-infra/.github/workflows/linux_job.yml@main
     with:
       runner: ${{ matrix.os }}
@@ -41,9 +41,9 @@ jobs:
         conda info
         python --version
         conda run -n build_binary python --version
-        conda run -n build_binary pip install torch --index-url https://download.pytorch.org/whl/test/cu121
+        conda run -n build_binary pip install torch
         conda run -n build_binary pip install numpy
-        conda run -n build_binary pip install fbgemm-gpu --index-url https://download.pytorch.org/whl/test/cu121
+        conda run -n build_binary pip install fbgemm-gpu
         conda run -n build_binary python -m pip install -r requirements.txt
         conda run -n build_binary python -c "import torch.distributed"
         echo "torch.distributed succeeded"
