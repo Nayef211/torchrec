@@ -12,8 +12,6 @@ on:
 
 jobs:
   build_release:
-    env:
-      PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
     strategy:
       matrix:
         include:
@@ -65,7 +63,7 @@ jobs:
         conda run -n build_binary \
           python -m twine upload \
             --username __token__ \
-            --password "$PYPI_TOKEN" \
+            --password ${{ secrets.PYPI_TOKEN }} \
             --skip-existing \
             dist/torchrec-*.whl
         
