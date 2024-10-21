@@ -107,7 +107,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [linux.g5.xlarge.nvidia.gpu]
+        os: [linux.g5.12xlarge.nvidia.gpu]
         python-version: [3.9, "3.10", "3.11", "3.12"]
         cuda-tag: ["cu124"]
     needs: build_on_cpu
