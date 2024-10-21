@@ -66,5 +66,6 @@ jobs:
             --password ${{ secrets.PYPI_TOKEN }} \
             --skip-existing \
             dist/torchrec-*.whl
-        
+    env:
+      PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
 
